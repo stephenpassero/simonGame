@@ -1,16 +1,17 @@
 body {
-    background-color:ghostwhite;
+    background-color:white;
     text-align:center;
 }
 
+#banner{
+    font-family: 'Nunito', serif;
+}
+
 #game{
-    width:350px;
-    height:350px;
-    border-width:10px;
-    border-color:dimgrey;
+    width:450px;
+    height:450px;
     border-radius:100%;
     position:relative;
-    border-style:solid;
     margin:100px auto;
 }
 
@@ -22,41 +23,48 @@ button{
 }
 
 .bigButton{
-    border-width:10px;
-    border-color:dimgrey;
+    border-width:15px;
+    border-color:#222;
     border-style:solid;
-    width:165px;
+    width:190px;
     display:inline-block;
-    height:165px;
-    margin:-6px;
+    height:190px;
+    margin:-2px;
 }
 
 #topLeft{
     border-radius:100% 0 0 0;
-    /*margin-left:10px;*/
+    background-color:#090;
 }
 
 #topRight {
     border-radius:0 100% 0 0;
+    background-color:#bc2000 ;
 }
 
 #bottomLeft{
     border-radius:0 0 0 100%;
-    /*margin-left:10px;*/
+    background-color:#bcbc20;
 }
 
 #bottomRight{
     border-radius:0 0 100% 0;
+    background-color:#0002bc;
 }
 
 #circle{
-    border-width:10px;
+    border-width:15px;
     border-style:solid;
-    border-color:dimgray;
-    background-color:dimgray;
-    margin-top:-255px;
-    width:130px;
-    height:130px;
-    margin-left:100px;
+    border-color: #222;
     border-radius:100%;
+    background-color:#E0DFDB;
+    width:180px;
+    height:180px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index:50;
 }

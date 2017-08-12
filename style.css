@@ -3,7 +3,11 @@ body {
     text-align:center;
 }
 
-#banner{
+#banner {
+    font-family: 'Nunito', serif;
+}
+
+h2{
     font-family: 'Nunito', serif;
 }
 
@@ -19,7 +23,7 @@ button{
     border-radius:100%;
     width:20px;
     height:20px;
-    margin:120px 20px 5px 20px;
+    margin:15px 30px 5px 30px;
     background-color:orangered;
     border-color:#222;
     border-style:solid;
@@ -70,4 +74,9 @@ button{
     right: 0;
     margin: auto;
     z-index:50;
+}
+
+h4{
+    display:inline-block;
+    margin:30px 20px 0 20px;
 }

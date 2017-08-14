@@ -29,10 +29,13 @@ button{
     border-style:solid;
 }
 
-button:active{
+#start:active{
     background-color: orange;
 }
 
+.active{
+    background-color:orange;
+}
 .bigButton{
     border-width:15px;
     border-color:#222;
@@ -43,22 +46,22 @@ button:active{
     margin:-2px;
 }
 
-#topLeft{
+#button1{
     border-radius:100% 0 0 0;
     background-color:#090;
 }
 
-#topRight {
+#button2 {
     border-radius:0 100% 0 0;
     background-color:#bc2000 ;
 }
 
-#bottomLeft{
+#button3{
     border-radius:0 0 0 100%;
     background-color:#bcbc20;
 }
 
-#bottomRight{
+#button4 {
     border-radius:0 0 100% 0;
     background-color:#0002bc;
 }
@@ -97,5 +100,6 @@ h4{
 }
 
 h3{
-    margin:auto auto;
+    margin:-6px auto 0 auto;
+    font-size:2em;
 }

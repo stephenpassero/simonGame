@@ -102,13 +102,11 @@ $(document).ready(function() {
                 playSequence(numbers);
                 listeningMode = true;
                 const userResponse = getUserResponse(i + 1, listeningMode);
-                if(listeningMode === false){
                     if (!arraysEqual(numbers, userResponse)) {
                         if (inStrictMode()) {
                             break;
                         }
                     }
-                }
             }
         }
     });

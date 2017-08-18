@@ -84,12 +84,11 @@ $(document).ready(function() {
     }
 
     function getUserResponse() {
-        listeningMode = true;
-        startInactivityTimer();
-        while (listeningMode) {
-            setTimeout(() => {}, 1000);
+        if (listeningMode) {
+            setTimeout(getUserResponse, 0);
+        } else {
+            return buttonsClicked;
         }
-        return buttonsClicked;
     }
 
     function arraysEqual(a, b) {
@@ -111,6 +110,8 @@ $(document).ready(function() {
             updateRound(i + 1);
             addAnotherRandomNumber(numbers);
             playSequence(numbers);
+            listeningMode = true;
+            startInactivityTimer();
             const userResponse = getUserResponse();
             if (!arraysEqual(numbers, userResponse)) {
                 break;

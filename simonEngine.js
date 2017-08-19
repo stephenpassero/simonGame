@@ -9,14 +9,21 @@ $(document).ready(function() {
             clearTimeout(inactivityTimer);
         }
 
-        inactivityTimer = setTimeout(() => listeningMode = false, 4000);
+        inactivityTimer = setTimeout(() => {
+            listeningMode = false;
+            console.log('You lose');
+        }, 4000);
     }
 
     function onButtonPressed() {
+        if(!buttonsClicked[buttonsClicked.length - 1] === numbers[buttonsClicked.length - 1]){
+            console.log('You lose');
+            listeningMode = false;
+        }
         if (buttonsClicked.length === numbers.length) {
             listeningMode = false;
-        } else {
             startInactivityTimer();
+            start();
         }
     }
 
@@ -86,6 +93,7 @@ $(document).ready(function() {
     function getUserResponse() {
         if (listeningMode) {
             setTimeout(getUserResponse, 0);
+            return [0, 1];
         } else {
             return buttonsClicked;
         }
@@ -101,26 +109,19 @@ $(document).ready(function() {
     function updateRound(round) {
         $('#count').html(round);
     }
-    $('#start').click(() => {
-        let win = false;
-        for (let i = 0; i < 20; i++) {
-            if (i === 19) {
-                win = true;
-            }
-            updateRound(i + 1);
+    let numOfRounds = 0;
+    function start(){
+        if(numOfRounds < 20){
+            numOfRounds++;
+            updateRound(numOfRounds);
             addAnotherRandomNumber(numbers);
             playSequence(numbers);
             listeningMode = true;
             startInactivityTimer();
-            const userResponse = getUserResponse();
-            if (!arraysEqual(numbers, userResponse)) {
-                break;
-            }
         }
-        if (win) {
-            console.log('You won!');
-        } else {
-            console.log('You lose');
-        }
+    }
+
+    $('#start').click(() => {
+        start();
     });
 });

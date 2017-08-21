@@ -88,6 +88,7 @@ $(document).ready(function() {
         if(++index === numbers.length) {
             return;
         }
+
         window.setTimeout(delayedLoop, 1000);
     }
 

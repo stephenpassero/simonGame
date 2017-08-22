@@ -3,7 +3,10 @@ $(document).ready(function() {
     let listeningMode = false;
     let numbers = [];
     let buttonsClicked = [];
-
+    const buttonOneSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+    const buttonTwoSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+    const buttonThreeSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
+    const buttonFourSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
     function startInactivityTimer() {
         if (inactivityTimer) {
             clearTimeout(inactivityTimer);
@@ -19,6 +22,7 @@ $(document).ready(function() {
 
     function buttonOneFlash() {
         $('#button1').css('background-color', '#13ff7c');
+        buttonOneSound.play();
         setTimeout(() => {
             $('#button1').css('background-color', '#090');
         }, 400);
@@ -26,6 +30,7 @@ $(document).ready(function() {
 
     function buttonTwoFlash() {
         $('#button2').css('background-color', '#ff4c4c');
+        buttonTwoSound.play();
         setTimeout(() => {
             $('#button2').css('background-color', '#bc2000');
         }, 400);
@@ -33,6 +38,7 @@ $(document).ready(function() {
 
     function buttonThreeFlash() {
         $('#button3').css('background-color', '#fed93f');
+        buttonThreeSound.play();
         setTimeout(() => {
             $('#button3').css('background-color', '#bcbc20');
         }, 400);
@@ -40,6 +46,7 @@ $(document).ready(function() {
 
     function buttonFourFlash() {
         $('#button4').css('background-color', '#1c8cff');
+        buttonFourSound.play();
         setTimeout(() => {
             $('#button4').css('background-color', '#0002bc');
         }, 400);
@@ -171,6 +178,23 @@ $(document).ready(function() {
                 }, 1500);
             }
             firstRun = false;
+        }else{
+            setTimeout(() => {
+                buttonOneFlash();
+                buttonTwoFlash();
+                buttonThreeFlash();
+                buttonFourFlash();
+                setTimeout(() => {
+                    buttonOneFlash();
+                    buttonTwoFlash();
+                    buttonThreeFlash();
+                    buttonFourFlash();
+                    numOfRounds = 0;
+                    running = false;
+                    firstRun = true;
+                    reDo = false;
+                }, 1350);
+            }, 1000);
         }
     }
     $('#start').click(() => {

@@ -9,22 +9,68 @@ $(document).ready(function() {
             clearTimeout(inactivityTimer);
         }
         inactivityTimer = setTimeout(() => {
-            listeningMode = false;
-            console.log('You lose');
-            running = false;
+            gotItWrong();
         }, 4000);
+    }
+
+    function inStrictMode() {
+        return $('#strict').hasClass('active');
+    }
+
+    function buttonOneFlash() {
+        $('#button1').css('background-color', '#13ff7c');
+        setTimeout(() => {
+            $('#button1').css('background-color', '#090');
+        }, 400);
+    }
+
+    function buttonTwoFlash() {
+        $('#button2').css('background-color', '#ff4c4c');
+        setTimeout(() => {
+            $('#button2').css('background-color', '#bc2000');
+        }, 400);
+    }
+
+    function buttonThreeFlash() {
+        $('#button3').css('background-color', '#fed93f');
+        setTimeout(() => {
+            $('#button3').css('background-color', '#bcbc20');
+        }, 400);
+    }
+
+    function buttonFourFlash() {
+        $('#button4').css('background-color', '#1c8cff');
+        setTimeout(() => {
+            $('#button4').css('background-color', '#0002bc');
+        }, 400);
+    }
+
+    function gotItWrong() {
+        listeningMode = false;
+        clearTimeout(inactivityTimer);
+        $('#count').html('! !');
+        if (inStrictMode()) {
+            running = false;
+            numbers = [];
+            buttonsClicked = [];
+            numOfRounds = 0;
+            return;
+        }
+        reDo = true;
+        setTimeout(() => {
+            start();
+        }, 1000);
     }
 
     function onButtonPressed() {
         if (buttonsClicked[buttonsClicked.length - 1] !== numbers[buttonsClicked.length - 1]) {
-            listeningMode = false;
-            clearTimeout(inactivityTimer);
-            console.log('You lose');
-            running = false;
+            gotItWrong();
+            return;
         }
         if (buttonsClicked.length === numbers.length) {
             listeningMode = false;
             clearTimeout(inactivityTimer);
+            reDo = false;
             start();
         } else {
             startInactivityTimer();
@@ -34,24 +80,28 @@ $(document).ready(function() {
         if (listeningMode === true) {
             buttonsClicked.push(1);
             onButtonPressed();
+            buttonOneFlash();
         }
     });
     $('#button2').click(() => {
         if (listeningMode === true) {
             buttonsClicked.push(2);
             onButtonPressed();
+            buttonTwoFlash();
         }
     });
     $('#button3').click(() => {
         if (listeningMode === true) {
             buttonsClicked.push(3);
             onButtonPressed();
+            buttonThreeFlash()
         }
     });
     $('#button4').click(() => {
         if (listeningMode === true) {
             buttonsClicked.push(4);
             onButtonPressed();
+            buttonFourFlash();
         }
     });
     $('#strict').click(() => {
@@ -62,38 +112,24 @@ $(document).ready(function() {
         }
     });
     let index = 0;
+
     function delayedLoop(callback) {
         const nextNumber = numbers[index];
         if (nextNumber === 1) {
-            $('#button' + nextNumber).css('background-color', '#13ff7c');
-            setTimeout(() => {
-                $('#button' + nextNumber).css('background-color', '#090');
-            }, 400);
+            buttonOneFlash();
         } else if (nextNumber === 2) {
-            $('#button' + nextNumber).css('background-color', '#ff4c4c');
-            setTimeout(() => {
-                $('#button' + nextNumber).css('background-color', '#bc2000');
-            }, 400);
+            buttonTwoFlash();
         } else if (nextNumber === 3) {
-            $('#button' + nextNumber).css('background-color', '#fed93f');
-            setTimeout(() => {
-                $('#button' + nextNumber).css('background-color', '#bcbc20');
-            }, 400);
+            buttonThreeFlash();
         } else if (nextNumber === 4) {
-            $('#button' + nextNumber).css('background-color', '#1c8cff');
-            setTimeout(() => {
-                $('#button' + nextNumber).css('background-color', '#0002bc');
-            }, 400);
+            buttonFourFlash();
         }
-
-        if(++index === numbers.length) {
+        if (++index === numbers.length) {
             callback();
             return;
         }
-
         window.setTimeout(delayedLoop.bind(this, callback), 1000);
     }
-
 
     function playSequence(callback) {
         index = 0;
@@ -109,18 +145,32 @@ $(document).ready(function() {
     }
     let numOfRounds = 0;
     let running = false;
+    let firstRun = true;
+    let reDo = false;
 
     function start() {
         buttonsClicked = [];
         running = true;
         if (numOfRounds < 20) {
-            numOfRounds++;
+            if (!reDo) {
+                numOfRounds++;
+                addAnotherRandomNumber(numbers);
+            }
             updateRound(numOfRounds);
-            addAnotherRandomNumber(numbers);
-            playSequence(() => {
-                listeningMode = true;
-                startInactivityTimer();
-            });
+            if (firstRun) {
+                playSequence(() => {
+                    listeningMode = true;
+                    startInactivityTimer();
+                });
+            } else {
+                setTimeout(() => {
+                    playSequence(() => {
+                        listeningMode = true;
+                        startInactivityTimer();
+                    });
+                }, 1500);
+            }
+            firstRun = false;
         }
     }
     $('#start').click(() => {

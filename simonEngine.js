@@ -18,6 +18,7 @@ $(document).ready(function() {
     function onButtonPressed() {
         if (buttonsClicked[buttonsClicked.length - 1] !== numbers[buttonsClicked.length - 1]) {
             listeningMode = false;
+            clearTimeout(inactivityTimer);
             console.log('You lose');
             running = false;
         }
@@ -61,7 +62,7 @@ $(document).ready(function() {
         }
     });
     let index = 0;
-    function delayedLoop() {
+    function delayedLoop(callback) {
         const nextNumber = numbers[index];
         if (nextNumber === 1) {
             $('#button' + nextNumber).css('background-color', '#13ff7c');
@@ -86,16 +87,17 @@ $(document).ready(function() {
         }
 
         if(++index === numbers.length) {
+            callback();
             return;
         }
 
-        window.setTimeout(delayedLoop, 1000);
+        window.setTimeout(delayedLoop.bind(this, callback), 1000);
     }
 
 
-    function playSequence() {
+    function playSequence(callback) {
         index = 0;
-        delayedLoop();
+        delayedLoop(callback);
     }
 
     function addAnotherRandomNumber(numbers) {
@@ -109,14 +111,16 @@ $(document).ready(function() {
     let running = false;
 
     function start() {
+        buttonsClicked = [];
         running = true;
         if (numOfRounds < 20) {
             numOfRounds++;
             updateRound(numOfRounds);
             addAnotherRandomNumber(numbers);
-            playSequence();
-            listeningMode = true;
-            startInactivityTimer();
+            playSequence(() => {
+                listeningMode = true;
+                startInactivityTimer();
+            });
         }
     }
     $('#start').click(() => {

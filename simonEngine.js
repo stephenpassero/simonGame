@@ -57,7 +57,6 @@ $(document).ready(function() {
         clearTimeout(inactivityTimer);
         $('#count').html('! !');
         if (inStrictMode()) {
-            running = false;
             numbers = [];
             buttonsClicked = [];
             numOfRounds = 0;
@@ -119,7 +118,7 @@ $(document).ready(function() {
         }
     });
     let index = 0;
-
+    let buttonFlashTimer;
     function delayedLoop(callback) {
         const nextNumber = numbers[index];
         if (nextNumber === 1) {
@@ -135,7 +134,7 @@ $(document).ready(function() {
             callback();
             return;
         }
-        window.setTimeout(delayedLoop.bind(this, callback), 1000);
+        buttonFlashTimer = setTimeout(delayedLoop.bind(this, callback), 1000);
     }
 
     function playSequence(callback) {
@@ -151,13 +150,11 @@ $(document).ready(function() {
         $('#count').html(round);
     }
     let numOfRounds = 0;
-    let running = false;
     let firstRun = true;
     let reDo = false;
 
     function start() {
         buttonsClicked = [];
-        running = true;
         if (numOfRounds < 20) {
             if (!reDo) {
                 numOfRounds++;
@@ -190,7 +187,6 @@ $(document).ready(function() {
                     buttonThreeFlash();
                     buttonFourFlash();
                     numOfRounds = 0;
-                    running = false;
                     firstRun = true;
                     reDo = false;
                 }, 1350);
@@ -198,8 +194,14 @@ $(document).ready(function() {
         }
     }
     $('#start').click(() => {
-        if (!running) {
-            start();
-        }
+        numbers = [];
+        buttonsClicked = [];
+        numOfRounds = 0;
+        firstRun = true;
+        reDo = false;
+        listeningMode = false
+        clearTimeout(inactivityTimer);
+        clearTimeout(buttonFlashTimer);
+        start();
     });
 });
